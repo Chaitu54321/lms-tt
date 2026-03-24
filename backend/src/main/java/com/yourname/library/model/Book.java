@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
 @Entity
 public class Book {
@@ -16,15 +17,19 @@ public class Book {
     private String title;
     private String author;
     private boolean available;
+    
+    @Column(columnDefinition = "integer default 0")
+    private Integer interestedCount = 0;
 
     public Book() {
     }
 
-    public Book(Long id, String title, String author, boolean available) {
+    public Book(Long id, String title, String author, boolean available, Integer interestedCount) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.available = available;
+        this.interestedCount = interestedCount == null ? 0 : interestedCount;
     }
 
     public Long getId() {
@@ -59,6 +64,14 @@ public class Book {
         this.available = available;
     }
 
+    public Integer getInterestedCount() {
+        return interestedCount == null ? 0 : interestedCount;
+    }
+
+    public void setInterestedCount(Integer interestedCount) {
+        this.interestedCount = interestedCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +92,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", available=" + available +
+                ", interestedCount=" + interestedCount +
                 '}';
     }
 
@@ -91,6 +105,7 @@ public class Book {
         private String title;
         private String author;
         private boolean available;
+        private Integer interestedCount;
 
         BookBuilder() {
         }
@@ -115,12 +130,17 @@ public class Book {
             return this;
         }
 
+        public BookBuilder interestedCount(Integer interestedCount) {
+            this.interestedCount = interestedCount;
+            return this;
+        }
+
         public Book build() {
-            return new Book(id, title, author, available);
+            return new Book(id, title, author, available, interestedCount);
         }
 
         public String toString() {
-            return "Book.BookBuilder(id=" + this.id + ", title=" + this.title + ", author=" + this.author + ", available=" + this.available + ")";
+            return "Book.BookBuilder(id=" + this.id + ", title=" + this.title + ", author=" + this.author + ", available=" + this.available + ", interestedCount=" + this.interestedCount + ")";
         }
     }
 }

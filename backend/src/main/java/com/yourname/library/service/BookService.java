@@ -31,4 +31,17 @@ public class BookService {
     public void deleteBook(Integer id) {
         repository.deleteById(id);
     }
+
+    public Book toggleAvailability(Integer id) {
+        Book book = getBookById(id);
+        book.setAvailable(!book.isAvailable());
+        return repository.save(book);
+    }
+
+    public Book incrementInterest(Integer id) {
+        Book book = getBookById(id);
+        int currentCount = book.getInterestedCount() == null ? 0 : book.getInterestedCount();
+        book.setInterestedCount(currentCount + 1);
+        return repository.save(book);
+    }
 }

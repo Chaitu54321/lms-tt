@@ -16,6 +16,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Table(name = "_user")
@@ -38,6 +42,14 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_wishlist",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private java.util.Set<Book> wishlist = new java.util.HashSet<>();
 
     public User() {
     }
@@ -90,6 +102,14 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public java.util.Set<Book> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(java.util.Set<Book> wishlist) {
+        this.wishlist = wishlist;
     }
 
     public void setUsername(String username) {

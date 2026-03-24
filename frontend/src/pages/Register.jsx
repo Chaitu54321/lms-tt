@@ -26,7 +26,7 @@ const Register = () => {
     setLoading(true);
     try {
       await register(formData.firstname, formData.lastname, formData.username, formData.email, formData.password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Try a different username.');
     } finally {

@@ -20,7 +20,7 @@ const Login = () => {
     setLoading(true);
     try {
       await login(formData.username, formData.password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to login. Please check your credentials.');
     } finally {
