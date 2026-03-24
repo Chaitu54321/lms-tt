@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_BACKEND_URL || 'https://lms-tt.onrender.com/api',
 });
 
 // Add a request interceptor to attach JWT token
